@@ -16,7 +16,7 @@ export default function Contact() {
             </h2>
             <p className="mb-12 leading-[1.8]">
               Tell us where you&apos;d like to go — or just what kind of trip
-              you&apos;ve been craving. A real travel planner will reply within
+              you&apos;ve been craving. A real travel planner replies within
               one working day.
             </p>
 
@@ -66,8 +66,8 @@ export default function Contact() {
                 <span className="font-sans font-semibold uppercase text-muted text-[11px] inline-block w-[50px]" style={{ letterSpacing: "0.15em" }}>
                   Email
                 </span>
-                <a href="mailto:journeys@imperialhealthsystems.in" className="hover:text-accent">
-                  journeys@imperialhealthsystems.in
+                <a href="mailto:info@imperialtechinnovations.com" className="hover:text-accent">
+                  info@imperialtechinnovations.com
                 </a>
               </p>
             </div>

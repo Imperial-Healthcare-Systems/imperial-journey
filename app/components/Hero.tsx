@@ -1,126 +1,243 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const SLIDES = [
-  "https://images.unsplash.com/photo-1502786129293-79981df4e689?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=85",
-  "https://images.unsplash.com/photo-1605640840605-14ac1855827b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=85",
-  "https://images.unsplash.com/photo-1599661046289-e31897846e41?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=85",
+type Scene = { name: string; poster: string; src: string };
+
+const SCENES: Scene[] = [
+  {
+    name: "Coastal Cliffs · Ireland",
+    poster: "https://images.pexels.com/videos/1851190/free-video-1851190.jpg",
+    src: "https://videos.pexels.com/video-files/1851190/1851190-uhd_3840_2160_25fps.mp4",
+  },
+  {
+    name: "Mountains · Switzerland",
+    poster:
+      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=2000",
+    src: "https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4",
+  },
+  {
+    name: "Aerial Wilderness",
+    poster:
+      "https://images.pexels.com/photos/2566826/pexels-photo-2566826.jpeg?auto=compress&cs=tinysrgb&w=2000",
+    src: "https://videos.pexels.com/video-files/3018669/3018669-hd_1920_1080_24fps.mp4",
+  },
+  {
+    name: "Waterfall · Iceland",
+    poster:
+      "https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg?auto=compress&cs=tinysrgb&w=2000",
+    src: "https://videos.pexels.com/video-files/1448735/1448735-hd_1920_1080_24fps.mp4",
+  },
+  {
+    name: "Golden Dunes · Sahara",
+    poster:
+      "https://images.pexels.com/videos/8397876/pexels-photo-8397876.jpeg?auto=compress&cs=tinysrgb&w=2000",
+    src: "https://videos.pexels.com/video-files/8397876/8397876-uhd_2560_1440_25fps.mp4",
+  },
+  {
+    name: "Snow Peaks · Alpine",
+    poster:
+      "https://images.pexels.com/videos/14922466/beautiful-landscape-blue-sky-landscape-mountains-14922466.jpeg?auto=compress&cs=tinysrgb&w=2000",
+    src: "https://videos.pexels.com/video-files/14922466/14922466-uhd_2560_1440_24fps.mp4",
+  },
 ];
+
+const SCENE_DURATION = 4500;
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const stopTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = null;
-  }, []);
-
-  const startTimer = useCallback(() => {
-    stopTimer();
-    timerRef.current = setInterval(
-      () => setIndex((i) => (i + 1) % SLIDES.length),
-      5500,
-    );
-  }, [stopTimer]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
-    startTimer();
-    return stopTimer;
-  }, [startTimer, stopTimer]);
+    let cancelled = false;
 
-  const goTo = (i: number) => {
-    setIndex(i);
-    startTimer();
-  };
+    const preloadOne = (i: number) =>
+      new Promise<void>((resolve) => {
+        const v = videoRefs.current[i];
+        if (!v) return resolve();
+        v.preload = "auto";
+        try {
+          v.load();
+        } catch {}
+        let timeout: ReturnType<typeof setTimeout>;
+        const done = () => {
+          v.removeEventListener("loadeddata", done);
+          v.removeEventListener("error", done);
+          clearTimeout(timeout);
+          resolve();
+        };
+        v.addEventListener("loadeddata", done);
+        v.addEventListener("error", done);
+        timeout = setTimeout(done, 12000);
+      });
+
+    const startChain = async () => {
+      await new Promise((r) => setTimeout(r, 1500));
+      for (let i = 1; i < SCENES.length; i++) {
+        if (cancelled) return;
+        await preloadOne(i);
+        await new Promise((r) => setTimeout(r, 800));
+      }
+    };
+
+    if (document.readyState === "complete") {
+      startChain();
+    } else {
+      const onLoad = () => startChain();
+      window.addEventListener("load", onLoad, { once: true });
+      return () => {
+        cancelled = true;
+        window.removeEventListener("load", onLoad);
+      };
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return;
+      if (i === index) {
+        v.play().catch(() => {});
+      } else {
+        try {
+          v.pause();
+        } catch {}
+      }
+    });
+  }, [index]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % SCENES.length);
+    }, SCENE_DURATION);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <section
       id="intro-section"
-      className="relative h-screen min-h-[680px] overflow-hidden bg-ink text-white max-[720px]:h-auto max-[720px]:py-[110px] max-[720px]:min-h-[580px]"
-      onMouseEnter={stopTimer}
-      onMouseLeave={startTimer}
+      className="relative h-screen min-h-[720px] overflow-hidden bg-ink max-[720px]:h-auto max-[720px]:pt-[160px] max-[720px]:pb-[100px] max-[720px]:min-h-[620px]"
     >
-      <div className="absolute inset-0">
-        {SLIDES.map((src, i) => (
-          <div
-            key={src}
-            className={`absolute inset-0 bg-center bg-cover transition-opacity duration-[1.4s] ease-in-out ${
+      <div className="absolute inset-0 overflow-hidden bg-ink">
+        {SCENES.map((s, i) => (
+          <video
+            key={s.src}
+            ref={(el) => {
+              videoRefs.current[i] = el;
+            }}
+            muted
+            loop
+            playsInline
+            preload={i === 0 ? "auto" : "none"}
+            poster={s.poster}
+            autoPlay={i === 0}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
-            style={{ backgroundImage: `url('${src}')` }}
+            style={{
+              backgroundImage: `url('${s.poster}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-black/35 to-black/45" />
-          </div>
+            <source src={s.src} type="video/mp4" />
+          </video>
         ))}
       </div>
 
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.65) 100%)",
+        }}
+      />
+
       <div className="wrap relative z-[2] h-full flex flex-col justify-center items-center text-center">
-        <span
-          className="font-serif italic mb-7 text-[13px] text-accent-soft"
-          style={{ letterSpacing: "0.4em", textTransform: "uppercase" }}
+        <div
+          className="flex items-center gap-[18px] mb-[30px] text-[12px] font-medium uppercase text-accent-soft"
+          style={{ letterSpacing: "0.5em" }}
         >
+          <span className="w-[50px] h-px bg-accent-soft opacity-60" />
           Imperial Journeys
-        </span>
+          <span className="w-[50px] h-px bg-accent-soft opacity-60" />
+        </div>
+
         <h1
-          className="font-sans font-semibold text-white mb-10 max-w-[1100px]"
+          className="font-sans font-semibold text-white mb-9 max-w-[1100px]"
           style={{
             fontSize: "clamp(3.2rem, 8.5vw, 7.5rem)",
             lineHeight: 1.05,
             letterSpacing: "-0.01em",
+            textShadow: "0 4px 30px rgba(0,0,0,0.4)",
           }}
         >
-          Curated
+          The world,
           <br />
           <span className="font-serif italic font-medium text-accent-soft">
-            Travel Journeys
+            beautifully curated.
           </span>
         </h1>
-        <p className="text-[1.1rem] text-white/85 max-w-[600px] mx-auto mb-12 font-light leading-[1.7]">
-          Bespoke itineraries across India and the world — designed by planners
-          who&apos;ve stayed in the rooms, eaten in the kitchens, and trusted
-          the drivers on the road.
+
+        <p className="text-[1.1rem] text-white/90 max-w-[620px] mx-auto mb-12 font-light leading-[1.7]">
+          From the silence of a Himalayan dawn to the roar of an African
+          savannah — we craft the journeys you&apos;ll spend a lifetime telling
+          stories about.
         </p>
+
         <div className="flex gap-4 flex-wrap justify-center">
-          <a href="#contact-section" className="btn btn-primary">
-            Plan My Trip <span className="arrow">→</span>
+          <a href="#wonders-section" className="btn btn-primary">
+            Discover Wonders <span className="arrow">→</span>
           </a>
-          <a href="#showcase-section" className="btn btn-outline">
-            View Journeys
+          <a href="#contact-section" className="btn btn-outline">
+            Plan Your Journey
           </a>
         </div>
       </div>
 
-      <div className="absolute right-10 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-[3]">
-        {SLIDES.map((_, i) => (
+      <div
+        className="absolute left-10 bottom-10 z-[3] flex items-center gap-3.5 text-white/85 text-[11px] uppercase font-medium max-[720px]:hidden"
+        style={{ letterSpacing: "0.25em" }}
+      >
+        <span
+          className="w-2 h-2 rounded-full bg-accent animate-pulseDot"
+          style={{ boxShadow: "0 0 12px #c8a45a" }}
+        />
+        <span>{SCENES[index].name}</span>
+      </div>
+
+      <div className="absolute right-10 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-[3] max-[720px]:hidden">
+        {SCENES.map((_, i) => (
           <button
             key={i}
-            aria-label={`Slide ${i + 1}`}
-            onClick={() => goTo(i)}
+            aria-label={`Scene ${i + 1}`}
+            onClick={() => setIndex(i)}
             className={`w-2 h-2 rounded-full border-0 cursor-pointer transition-all duration-300 ${
               i === index
-                ? "bg-white scale-[1.3]"
+                ? "bg-accent-soft scale-[1.4]"
                 : "bg-white/40 hover:bg-white/70"
             }`}
+            style={
+              i === index
+                ? { boxShadow: "0 0 12px rgba(232,214,168,0.6)" }
+                : undefined
+            }
           />
         ))}
       </div>
 
       <div
-        aria-hidden="true"
-        className="absolute right-8 bottom-10 text-[10px] uppercase text-white/60 z-[3] max-[720px]:hidden"
-        style={{
-          letterSpacing: "0.3em",
-          writingMode: "vertical-rl",
-          transform: "rotate(180deg)",
-        }}
+        className="absolute bottom-[30px] left-1/2 -translate-x-1/2 text-[10px] uppercase text-white/65 z-[3] max-[720px]:hidden"
+        style={{ letterSpacing: "0.3em" }}
       >
-        Scroll
+        Scroll to Explore
         <span
-          className="block w-px h-10 mx-auto mt-3.5 animate-drop"
+          className="block w-px h-9 mx-auto mt-3 animate-drop"
           style={{
-            background: "linear-gradient(to top, #e8d6a8, transparent)",
+            background: "linear-gradient(to bottom, #e8d6a8, transparent)",
           }}
         />
       </div>

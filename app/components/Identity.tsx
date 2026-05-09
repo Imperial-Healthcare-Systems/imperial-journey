@@ -1,19 +1,35 @@
 export default function Identity() {
   return (
-    <section
-      className="reveal relative py-[140px] text-center text-white"
-      style={{
-        background:
-          "linear-gradient(rgba(26,26,26,0.78), rgba(26,26,26,0.78)), url('https://images.unsplash.com/photo-1599661046289-e31897846e41?w=2000&q=80') center/cover fixed",
-      }}
-    >
-      <div className="wrap">
+    <section className="reveal relative py-[160px] text-center text-white overflow-hidden">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full object-cover z-0"
+      >
+        <source
+          src="https://videos.pexels.com/video-files/1409899/1409899-uhd_3840_2160_25fps.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(13,13,13,0.85), rgba(13,13,13,0.7))",
+        }}
+      />
+      <div className="wrap relative z-[2]">
         <h2
-          className="font-serif text-white font-medium max-w-[800px] mx-auto mb-12"
+          className="font-serif text-white font-medium max-w-[880px] mx-auto mb-12"
           style={{ fontSize: "clamp(2rem, 4vw, 3.4rem)" }}
         >
-          We craft a unique journey that{" "}
-          <span className="italic text-accent-soft">conveys who you are.</span>
+          We craft journeys that{" "}
+          <span className="italic text-accent-soft">
+            tell people who you are.
+          </span>
         </h2>
         <div className="grid grid-cols-2 gap-20 max-w-[980px] mx-auto text-left max-[720px]:grid-cols-1 max-[720px]:gap-[30px]">
           <p className="text-white/85 font-light text-base leading-[1.85]">

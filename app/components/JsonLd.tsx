@@ -4,13 +4,13 @@ const data = {
   name: "Imperial Journeys",
   description:
     "Curated journeys, bespoke holidays, and signature experiences across India and the world.",
-  url: "https://imperialhealthsystems.in",
+  url: "https://imperialjourneys.com",
   parentOrganization: {
     "@type": "Organization",
     name: "Imperial Healthcare Systems Pvt Ltd",
   },
   telephone: ["+91-73580-13585", "+1-859-978-8780"],
-  email: "journeys@imperialhealthsystems.in",
+  email: "info@imperialtechinnovations.com",
   address: [
     {
       "@type": "PostalAddress",

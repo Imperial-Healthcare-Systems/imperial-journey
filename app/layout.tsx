@@ -11,7 +11,7 @@ const poppins = Poppins({
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
@@ -21,25 +21,24 @@ const FAVICON =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23c8a45a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-weight='600' font-size='34' fill='white'%3EIJ%3C/text%3E%3C/svg%3E";
 
 const OG_IMAGE =
-  "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1200&q=85";
+  "https://images.pexels.com/photos/210186/pexels-photo-210186.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
 export const metadata: Metadata = {
-  title: "Imperial Journeys — Curated Travel Experiences",
+  title: "Imperial Journeys — The World, Beautifully Curated",
   description:
-    "Imperial Journeys is a travel brand of Imperial Healthcare Systems Pvt Ltd, crafting curated journeys, bespoke holidays, and signature experiences across India and the world.",
+    "Imperial Journeys — A travel brand of Imperial Healthcare Systems Pvt Ltd. Cinematic, bespoke journeys across India and the world.",
   icons: { icon: FAVICON },
   openGraph: {
     type: "website",
-    title: "Imperial Journeys — Curated Travel Experiences",
+    title: "Imperial Journeys — The World, Beautifully Curated",
     description:
-      "Curated journeys, bespoke holidays, and signature experiences across India and the world.",
+      "Cinematic, bespoke journeys across India and the world.",
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Imperial Journeys — Curated Travel Experiences",
-    description:
-      "Curated journeys, bespoke holidays, and signature experiences across India and the world.",
+    title: "Imperial Journeys — The World, Beautifully Curated",
+    description: "Cinematic, bespoke journeys across India and the world.",
     images: [OG_IMAGE],
   },
 };

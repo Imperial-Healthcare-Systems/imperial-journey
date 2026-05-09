@@ -8,7 +8,7 @@ const FEATURES: Feature[] = [
   {
     title: "Hand-Picked Stays",
     body:
-      "From palace suites to mountain lodges — every property is personally vetted. We never recommend a hotel we wouldn't book ourselves.",
+      "From palace suites to mountain lodges — every property personally vetted. We never recommend a hotel we wouldn't book ourselves.",
     svg: (
       <path d="M24 4l5.5 11.5L42 17l-9 8.5L35 38l-11-6-11 6 2-12.5L6 17l12.5-1.5z" />
     ),
@@ -16,7 +16,7 @@ const FEATURES: Feature[] = [
   {
     title: "24×7 On-Trip Concierge",
     body:
-      "A single WhatsApp number. One real person on the other end. Whether it's a flight delay or a dinner reservation, we're on call.",
+      "One WhatsApp number. One real person on the other end. Whether it's a flight delay or a dinner reservation, we're on call.",
     svg: (
       <>
         <circle cx="24" cy="24" r="18" />
@@ -45,7 +45,7 @@ export default function Features() {
     >
       <div className="wrap">
         <div className="reveal text-center mb-20">
-          <div className="eyebrow">Useful & Simple</div>
+          <div className="eyebrow">Why Imperial</div>
           <h2 className="my-4 mx-auto max-w-[780px]">
             Travel planning that{" "}
             <span className="font-serif italic font-medium text-accent">

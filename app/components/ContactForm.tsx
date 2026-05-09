@@ -2,7 +2,7 @@
 
 import { useRef, useState, type FormEvent } from "react";
 
-const RECIPIENT = "info@imperialhealthsystems.com";
+const RECIPIENT = "info@imperialtechinnovations.com";
 
 const TRIP_TYPES = [
   "Heritage Stays",

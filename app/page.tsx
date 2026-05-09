@@ -1,11 +1,13 @@
 import TopBar from "./components/TopBar";
 import SiteHeader from "./components/SiteHeader";
 import Hero from "./components/Hero";
-import Showcase from "./components/Showcase";
+import Moments from "./components/Moments";
+import Wonders from "./components/Wonders";
 import About from "./components/About";
 import Features from "./components/Features";
 import Identity from "./components/Identity";
 import Services from "./components/Services";
+import Stats from "./components/Stats";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import RevealOnScroll from "./components/RevealOnScroll";
@@ -17,11 +19,13 @@ export default function HomePage() {
       <TopBar />
       <SiteHeader />
       <Hero />
-      <Showcase />
+      <Moments />
+      <Wonders />
       <About />
       <Features />
       <Identity />
       <Services />
+      <Stats />
       <Contact />
       <Footer />
       <RevealOnScroll />

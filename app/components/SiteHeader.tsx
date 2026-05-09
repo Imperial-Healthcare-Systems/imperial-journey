@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
   { href: "#intro-section", label: "Intro" },
-  { href: "#showcase-section", label: "Showcase" },
+  { href: "#wonders-section", label: "Wonders" },
   { href: "#about-section", label: "About" },
-  { href: "#features-section", label: "Features" },
+  { href: "#features-section", label: "Why Us" },
   { href: "#services-section", label: "Services" },
   { href: "#contact-section", label: "Contact" },
 ];
@@ -17,7 +17,7 @@ export default function SiteHeader() {
   const [activeId, setActiveId] = useState("intro-section");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -37,48 +37,65 @@ export default function SiteHeader() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible.length) setActiveId(visible[0].target.id);
       },
-      {
-        rootMargin: "-40% 0px -50% 0px",
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
     );
     sections.forEach((s) => io.observe(s));
     return () => io.disconnect();
   }, []);
 
+  const headerClass = scrolled
+    ? "fixed top-0 left-0 right-0 z-[50] py-3.5 transition-all duration-[400ms] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
+    : "absolute top-[45px] left-0 right-0 z-[50] py-[18px] transition-all duration-[400ms]";
+
   return (
     <header
-      className={`bg-paper sticky top-0 z-[100] border-b border-line transition-all duration-300 ${
-        scrolled ? "shadow-[0_4px_20px_rgba(0,0,0,0.06)]" : ""
-      }`}
+      className={headerClass}
+      style={
+        scrolled
+          ? {
+              background: "rgba(13,13,13,0.92)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+            }
+          : undefined
+      }
     >
-      <div className="wrap flex items-center justify-between py-5">
+      <div className="wrap flex items-center justify-between">
         <a href="#intro-section" className="flex items-center gap-3.5">
           <div
-            className="w-11 h-11 grid place-items-center text-white font-serif text-[22px] font-semibold italic rounded-md"
+            className="w-[46px] h-[46px] grid place-items-center text-white font-serif text-[22px] font-semibold italic rounded-md"
             style={{
               background: "linear-gradient(135deg, #c8a45a, #a08039)",
-              boxShadow: "0 6px 18px -6px rgba(200,164,90,0.5)",
+              boxShadow: "0 8px 22px -8px rgba(200,164,90,0.6)",
             }}
           >
             IJ
           </div>
           <div className="leading-[1.1]">
-            <span className="font-serif font-semibold text-[22px]">
+            <span className="font-serif font-semibold text-[22px] text-white">
               Imperial Journeys
             </span>
-            <span className="block mt-1 text-[9px] uppercase font-medium text-accent" style={{ letterSpacing: "0.28em" }}>
-              Curated Travel · Est. 2024
+            <span
+              className="block mt-1 text-[9px] uppercase font-medium text-accent-soft"
+              style={{ letterSpacing: "0.28em" }}
+            >
+              The World, Curated
             </span>
           </div>
         </a>
 
         <nav
           className={`flex gap-9 items-center ${
+            open ? "max-[980px]:right-0" : "max-[980px]:right-[-100%]"
+          } max-[980px]:fixed max-[980px]:top-0 max-[980px]:w-4/5 max-[980px]:max-w-[340px] max-[980px]:h-screen max-[980px]:flex-col max-[980px]:items-start max-[980px]:pt-[110px] max-[980px]:px-9 max-[980px]:pb-9 max-[980px]:gap-[22px] max-[980px]:transition-[right] max-[980px]:duration-[400ms] max-[980px]:z-[99]`}
+          style={
             open
-              ? "max-[980px]:right-0"
-              : "max-[980px]:right-[-100%]"
-          } max-[980px]:fixed max-[980px]:top-0 max-[980px]:w-4/5 max-[980px]:max-w-[340px] max-[980px]:h-screen max-[980px]:bg-ink max-[980px]:flex-col max-[980px]:items-start max-[980px]:pt-[100px] max-[980px]:px-9 max-[980px]:pb-9 max-[980px]:gap-[22px] max-[980px]:transition-[right] max-[980px]:duration-[400ms] max-[980px]:z-[99]`}
+              ? {
+                  background: "rgba(13,13,13,0.98)",
+                  backdropFilter: "blur(20px)",
+                }
+              : undefined
+          }
         >
           {NAV_LINKS.map((link) => {
             const id = link.href.slice(1);
@@ -88,10 +105,10 @@ export default function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`text-[13px] font-medium relative py-2 transition-colors duration-300 hover:text-accent-deep max-[980px]:text-white ${
-                  isActive ? "text-accent-deep" : ""
+                className={`text-[12px] font-medium uppercase relative py-2 transition-colors duration-300 hover:text-accent-soft ${
+                  isActive ? "text-accent-soft" : "text-white/85"
                 }`}
-                style={{ letterSpacing: "0.05em" }}
+                style={{ letterSpacing: "0.18em" }}
               >
                 {link.label}
                 <span
@@ -109,9 +126,9 @@ export default function SiteHeader() {
           onClick={() => setOpen((v) => !v)}
           className="hidden max-[980px]:block bg-transparent border-0 p-2 z-[101]"
         >
-          <span className="block w-6 h-0.5 bg-ink my-[5px] transition-all duration-300" />
-          <span className="block w-6 h-0.5 bg-ink my-[5px] transition-all duration-300" />
-          <span className="block w-6 h-0.5 bg-ink my-[5px] transition-all duration-300" />
+          <span className="block w-6 h-0.5 bg-white my-[5px] transition-all duration-300" />
+          <span className="block w-6 h-0.5 bg-white my-[5px] transition-all duration-300" />
+          <span className="block w-6 h-0.5 bg-white my-[5px] transition-all duration-300" />
         </button>
       </div>
     </header>

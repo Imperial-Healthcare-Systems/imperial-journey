@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const ABOUT_VIDEO_URL =
+  "https://videos.pexels.com/video-files/2169880/2169880-uhd_3840_2160_30fps.mp4";
 
 export default function About() {
   const [open, setOpen] = useState(false);
+  const modalVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -12,11 +16,22 @@ export default function About() {
     };
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKey);
+    if (modalVideoRef.current) {
+      modalVideoRef.current.play().catch(() => {});
+    }
     return () => {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", onKey);
     };
   }, [open]);
+
+  const close = () => {
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+      modalVideoRef.current.currentTime = 0;
+    }
+    setOpen(false);
+  };
 
   return (
     <>
@@ -27,15 +42,18 @@ export default function About() {
         <div className="wrap">
           <div className="grid grid-cols-2 gap-20 items-center max-[880px]:grid-cols-1 max-[880px]:gap-[50px]">
             <div className="reveal">
-              <div className="eyebrow">Behind the Scene</div>
-              <h2 className="font-serif font-medium mb-7 mt-4">
-                The team that{" "}
-                <span className="italic text-accent">crafts the journey</span>{" "}
-                long before you board.
+              <div className="eyebrow">Behind Every Journey</div>
+              <h2 className="font-serif font-medium mt-4 mb-7">
+                A decade of{" "}
+                <span className="italic text-accent">
+                  operational discipline,
+                </span>
+                <br />
+                brought to a craft that runs on charm.
               </h2>
               <p className="mb-[22px] leading-[1.85]">
                 Imperial Journeys is the travel arm of Imperial Healthcare
-                Systems Pvt Ltd — a group that has spent the last decade
+                Systems Pvt Ltd — a group that&apos;s spent the last decade
                 building dependable, detail-obsessed services across healthcare
                 and technology. We brought the same instinct to travel.
               </p>
@@ -43,11 +61,11 @@ export default function About() {
                 Every itinerary you see was sketched by a real planner who has
                 stayed in the rooms they&apos;re sending you to, eaten in the
                 kitchens they&apos;re recommending, and trusted the drivers on
-                the road. The work happens behind the scene — what you
+                the road. The work happens behind the scenes — what you
                 experience is just the journey.
               </p>
               <a href="#contact-section" className="btn btn-dark mt-4">
-                Talk to a Planner <span className="arrow">→</span>
+                Plan Your Journey <span className="arrow">→</span>
               </a>
             </div>
 
@@ -55,29 +73,42 @@ export default function About() {
               type="button"
               aria-label="Play story film"
               onClick={() => setOpen(true)}
-              className="reveal relative aspect-[4/5] w-full bg-cover bg-center overflow-hidden rounded-md cursor-pointer grid place-items-center border-0 p-0 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=80')",
-              }}
+              className="reveal relative aspect-[4/5] w-full overflow-hidden rounded-md cursor-pointer bg-ink border-0 p-0 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
             >
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover"
+              >
+                <source src={ABOUT_VIDEO_URL} type="video/mp4" />
+              </video>
               <span
-                className="absolute pointer-events-none rounded-sm"
+                className="absolute pointer-events-none rounded-sm z-[2]"
                 style={{
                   inset: 24,
                   border: "1px solid rgba(255,255,255,0.4)",
                 }}
               />
-              <span className="relative w-[100px] h-[100px] bg-accent rounded-full grid place-items-center transition-transform duration-[400ms] group-hover:scale-[1.08] z-[2]">
+              <span
+                className="absolute inset-0 z-[1]"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.4))",
+                }}
+              />
+              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110px] h-[110px] bg-accent rounded-full grid place-items-center z-[3] transition-transform duration-[400ms] group-hover:scale-[1.08]">
                 <span className="absolute -inset-2.5 rounded-full border border-white/60 animate-ripple" />
                 <span
-                  className="block ml-1"
+                  className="block ml-1.5"
                   style={{
                     width: 0,
                     height: 0,
-                    borderLeft: "18px solid #fff",
-                    borderTop: "12px solid transparent",
-                    borderBottom: "12px solid transparent",
+                    borderLeft: "22px solid #fff",
+                    borderTop: "14px solid transparent",
+                    borderBottom: "14px solid transparent",
                   }}
                 />
               </span>
@@ -90,45 +121,31 @@ export default function About() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-labelledby="videoModalTitle"
           className="fixed inset-0 z-[200] grid place-items-center p-8"
-          style={{ background: "rgba(0,0,0,0.92)" }}
+          style={{ background: "rgba(0,0,0,0.95)" }}
           onClick={(e) => {
-            if (e.target === e.currentTarget) setOpen(false);
+            if (e.target === e.currentTarget) close();
           }}
         >
-          <div className="w-full max-w-[980px] aspect-video bg-black relative">
+          <div className="w-full max-w-[1080px] aspect-video bg-black relative">
             <button
               aria-label="Close"
-              onClick={() => setOpen(false)}
-              className="absolute -top-12 right-0 bg-transparent border-0 text-white text-3xl cursor-pointer"
+              onClick={close}
+              className="absolute -top-12 right-0 bg-transparent border-0 text-white text-[38px] cursor-pointer leading-none"
             >
               ×
             </button>
-            <div
-              className="absolute inset-0 grid place-items-center text-center text-white p-10"
-              style={{
-                background: "linear-gradient(135deg, #1f1f1f, #2a2a2a)",
-              }}
+            <video
+              ref={modalVideoRef}
+              controls
+              preload="auto"
+              className="w-full h-full block"
             >
-              <div className="max-w-[480px]">
-                <div className="eyebrow" style={{ color: "#e8d6a8" }}>
-                  Story Film
-                </div>
-                <h3
-                  id="videoModalTitle"
-                  className="font-serif italic font-medium text-white my-3.5"
-                  style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)" }}
-                >
-                  Coming soon.
-                </h3>
-                <p className="text-white/70">
-                  We&apos;re shooting a short film with our travellers across
-                  India this season. Drop us a line and we&apos;ll send it to
-                  you the moment it lands.
-                </p>
-              </div>
-            </div>
+              <source
+                src="https://videos.pexels.com/video-files/1851190/1851190-uhd_3840_2160_25fps.mp4"
+                type="video/mp4"
+              />
+            </video>
           </div>
         </div>
       )}
