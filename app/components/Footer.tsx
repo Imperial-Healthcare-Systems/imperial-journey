@@ -101,7 +101,7 @@ export default function Footer() {
             >
               A Travel Brand of Imperial Healthcare Systems Pvt Ltd
             </span>
-            © 2024–2026 Imperial Journeys. All rights reserved.
+            © 2025–2026 Imperial Journeys. All rights reserved.
           </div>
         </div>
       </footer>
