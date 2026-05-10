@@ -34,23 +34,24 @@ export default function Footer() {
     <>
       <footer className="bg-ink text-white/65 pt-[70px] pb-7 text-center">
         <div className="wrap">
-          <div className="inline-flex flex-col items-center mb-8">
+          <div className="inline-flex items-center gap-4 mb-10">
             <Image
-              src="/imperial-tech-logo-white.png"
+              src="/imperial-tech-icon-white.png"
               alt="Imperial Tech Innovations"
-              width={1716}
-              height={737}
-              className="h-[120px] w-auto object-contain mb-4"
+              width={62}
+              height={70}
             />
-            <span className="font-serif text-[28px] font-semibold text-white">
-              Imperial Journeys
-            </span>
-            <span
-              className="text-[10px] uppercase text-accent mt-1.5 font-medium"
-              style={{ letterSpacing: "0.3em" }}
-            >
-              The World, Curated
-            </span>
+            <div className="text-left leading-[1.1]">
+              <div className="font-serif font-semibold text-[28px] text-white">
+                Imperial Journeys
+              </div>
+              <div
+                className="text-[10px] uppercase text-accent mt-1.5 font-medium"
+                style={{ letterSpacing: "0.3em" }}
+              >
+                The World, Curated
+              </div>
+            </div>
           </div>
 
           <div className="my-7 flex justify-center gap-3.5">

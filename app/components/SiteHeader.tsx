@@ -66,10 +66,9 @@ export default function SiteHeader() {
           <Image
             src="/imperial-tech-icon-white.png"
             alt="Imperial Tech Innovations"
-            width={652}
-            height={737}
+            width={46}
+            height={52}
             priority
-            className="h-[52px] w-auto object-contain"
           />
           <div className="leading-[1.1]">
             <span className="font-serif font-semibold text-[22px] text-white">

@@ -11,6 +11,7 @@ import Stats from "./components/Stats";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import RevealOnScroll from "./components/RevealOnScroll";
+import WhatsAppButton from "./components/WhatsAppButton";
 import JsonLd from "./components/JsonLd";
 
 export default function HomePage() {
@@ -28,6 +29,7 @@ export default function HomePage() {
       <Stats />
       <Contact />
       <Footer />
+      <WhatsAppButton />
       <RevealOnScroll />
       <JsonLd />
     </>
