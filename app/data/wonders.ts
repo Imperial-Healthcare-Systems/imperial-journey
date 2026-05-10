@@ -143,7 +143,7 @@ export const WONDERS: Wonder[] = [
     image:
       "https://images.pexels.com/photos/3889855/pexels-photo-3889855.jpeg?auto=compress&cs=tinysrgb&w=1200",
     heroVideo:
-      "https://videos.pexels.com/video-files/4321598/4321598-uhd_3840_2160_30fps.mp4",
+      "https://videos.pexels.com/video-files/8397876/8397876-uhd_2560_1440_25fps.mp4",
     tagline:
       "A camel walk across the dunes, a Bedouin camp under more stars than you have ever seen.",
     intro:
