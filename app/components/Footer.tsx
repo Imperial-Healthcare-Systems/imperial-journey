@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { LEGAL_PAGES, type LegalKey } from "../data/legal";
+import { SOCIAL_LINKS } from "../data/social";
 
 const TRIGGERS: { key: LegalKey; label: string }[] = [
   { key: "privacy", label: "Privacy Policy" },
@@ -55,21 +56,16 @@ export default function Footer() {
           </div>
 
           <div className="my-7 flex justify-center gap-3.5">
-            {[
-              { label: "Facebook", text: "f", href: "https://www.facebook.com/share/1ESRDq5rmJ/" },
-              { label: "Instagram", text: "ig", href: "https://www.instagram.com/imperialtechinnovations?igsh=YnR6c2VuOXppaWpz" },
-              { label: "X", text: "X", href: "https://x.com/ImperialTe26996" },
-              { label: "LinkedIn", text: "in", href: "https://www.linkedin.com/company/imperial-tech-innovations/" },
-            ].map((s) => (
+            {SOCIAL_LINKS.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={s.label}
-                className="w-10 h-10 border border-white/20 rounded-full grid place-items-center text-[13px] text-white/70 transition-all duration-300 hover:bg-accent hover:border-accent hover:text-white hover:-translate-y-0.5"
+                className="w-10 h-10 border border-white/20 rounded-full grid place-items-center text-white/70 transition-all duration-300 hover:bg-accent hover:border-accent hover:text-white hover:-translate-y-0.5 [&>svg]:w-[18px] [&>svg]:h-[18px]"
               >
-                {s.text}
+                {s.icon}
               </a>
             ))}
           </div>
