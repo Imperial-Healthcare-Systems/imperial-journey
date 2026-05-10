@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
@@ -62,15 +63,14 @@ export default function SiteHeader() {
     >
       <div className="wrap flex items-center justify-between">
         <a href="#intro-section" className="flex items-center gap-3.5">
-          <div
-            className="w-[46px] h-[46px] grid place-items-center text-white font-serif text-[22px] font-semibold italic rounded-md"
-            style={{
-              background: "linear-gradient(135deg, #c8a45a, #a08039)",
-              boxShadow: "0 8px 22px -8px rgba(200,164,90,0.6)",
-            }}
-          >
-            IJ
-          </div>
+          <Image
+            src="/imperial-tech-logo.png"
+            alt="Imperial Tech Innovations"
+            width={1776}
+            height={796}
+            priority
+            className="h-[60px] w-auto object-contain"
+          />
           <div className="leading-[1.1]">
             <span className="font-serif font-semibold text-[22px] text-white">
               Imperial Journeys

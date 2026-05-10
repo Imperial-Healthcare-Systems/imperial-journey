@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { LEGAL_PAGES, type LegalKey } from "../data/legal";
 
@@ -34,6 +35,13 @@ export default function Footer() {
       <footer className="bg-ink text-white/65 pt-[70px] pb-7 text-center">
         <div className="wrap">
           <div className="inline-flex flex-col items-center mb-8">
+            <Image
+              src="/imperial-tech-logo.png"
+              alt="Imperial Tech Innovations"
+              width={1776}
+              height={796}
+              className="h-[120px] w-auto object-contain mb-4"
+            />
             <span className="font-serif text-[28px] font-semibold text-white">
               Imperial Journeys
             </span>
@@ -47,14 +55,16 @@ export default function Footer() {
 
           <div className="my-7 flex justify-center gap-3.5">
             {[
-              { label: "Facebook", text: "f" },
-              { label: "Instagram", text: "ig" },
-              { label: "LinkedIn", text: "in" },
-              { label: "WhatsApp", text: "wa" },
+              { label: "Facebook", text: "f", href: "https://www.facebook.com/share/1ESRDq5rmJ/" },
+              { label: "Instagram", text: "ig", href: "https://www.instagram.com/imperialtechinnovations?igsh=YnR6c2VuOXppaWpz" },
+              { label: "X", text: "X", href: "https://x.com/ImperialTe26996" },
+              { label: "LinkedIn", text: "in", href: "https://www.linkedin.com/company/imperial-tech-innovations/" },
             ].map((s) => (
               <a
                 key={s.label}
-                href="#"
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={s.label}
                 className="w-10 h-10 border border-white/20 rounded-full grid place-items-center text-[13px] text-white/70 transition-all duration-300 hover:bg-accent hover:border-accent hover:text-white hover:-translate-y-0.5"
               >
