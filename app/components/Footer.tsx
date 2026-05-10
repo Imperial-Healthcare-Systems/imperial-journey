@@ -36,10 +36,10 @@ export default function Footer() {
         <div className="wrap">
           <div className="inline-flex flex-col items-center mb-8">
             <Image
-              src="/imperial-tech-logo.png"
+              src="/imperial-tech-logo-white.png"
               alt="Imperial Tech Innovations"
-              width={1776}
-              height={796}
+              width={1716}
+              height={737}
               className="h-[120px] w-auto object-contain mb-4"
             />
             <span className="font-serif text-[28px] font-semibold text-white">

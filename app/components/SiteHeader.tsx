@@ -64,12 +64,12 @@ export default function SiteHeader() {
       <div className="wrap flex items-center justify-between">
         <a href="#intro-section" className="flex items-center gap-3.5">
           <Image
-            src="/imperial-tech-logo.png"
+            src="/imperial-tech-icon-white.png"
             alt="Imperial Tech Innovations"
-            width={1776}
-            height={796}
+            width={652}
+            height={737}
             priority
-            className="h-[60px] w-auto object-contain"
+            className="h-[52px] w-auto object-contain"
           />
           <div className="leading-[1.1]">
             <span className="font-serif font-semibold text-[22px] text-white">
