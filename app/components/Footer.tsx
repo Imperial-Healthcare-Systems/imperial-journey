@@ -36,8 +36,8 @@ export default function Footer() {
         <div className="wrap">
           <div className="inline-flex items-center gap-4 mb-10">
             <Image
-              src="/imperial-tech-icon-white.png"
-              alt="Imperial Tech Innovations"
+              src="/Imperial%20tech%20logo%20bbc.png"
+              alt="Imperial Journeys"
               width={62}
               height={70}
             />

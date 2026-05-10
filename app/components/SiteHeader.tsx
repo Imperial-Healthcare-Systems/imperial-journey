@@ -64,8 +64,8 @@ export default function SiteHeader() {
       <div className="wrap flex items-center justify-between">
         <a href="#intro-section" className="flex items-center gap-3.5">
           <Image
-            src="/imperial-tech-icon-white.png"
-            alt="Imperial Tech Innovations"
+            src="/Imperial%20tech%20logo%20bbc.png"
+            alt="Imperial Journeys"
             width={46}
             height={52}
             priority
